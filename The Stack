@@ -1,0 +1,63 @@
+import java.util.Arrays;
+
+public class Stack {
+	private String[] MyStack;
+	private int StackSize;
+	private int location ;
+	
+	
+	public Stack(int size){
+		StackSize = size;
+		MyStack = new String[StackSize];
+		location = 0;
+		Arrays.fill(MyStack, "-1");
+	}
+	
+	public void push(String input){
+		if (location+1 <=StackSize){
+			MyStack[location] = input;
+			location++;
+		}else{
+			System.out.println("Sorry, the Stack is Full");
+		}
+	}
+	
+	public String pop(){
+		if (location==0){
+			System.out.println("There is nothing you can pop out!!!");
+			return "-1";
+		}else{
+			String temp = MyStack[location-1];
+			MyStack[location-1] = "-1";
+			location--;
+			return temp;
+		}
+		
+	}
+	
+	public void display(){
+		for (int i = 0; i<StackSize; i++){
+			if (MyStack[i]!="-1"){
+			System.out.println(MyStack[i]);}
+			else{System.out.println("empty");}
+		}
+		
+	}
+	
+	public static void main(String[] args){
+		Stack test = new Stack(5);
+		test.push("this is 1");
+		test.push("that is 2");
+		test.push("there are 3");
+		test.push("which is 4");
+		test.display();
+		System.out.println("");
+		test.pop();
+		test.pop();
+		test.pop();
+		test.pop();
+		test.pop();
+		test.display();
+		
+	}
+}
