@@ -1,0 +1,79 @@
+package mylinkedlist;
+
+public class Node {
+	int data;
+	Node nextNode = null;
+	
+	// the first constructor for the head node
+	public Node(int d){
+		data = d;
+		nextNode = null;
+		
+	}
+	//the second constructor for the node with the pointer
+	// N stands for the previous Node
+	public Node(int d, Node N){
+		data = d;
+		N.nextNode = this;
+		this.nextNode = null;
+	}
+	
+	public int getData(){
+		return data;
+	}
+}
+
+package mylinkedlist;
+
+public class mylist {
+	Node head;
+	Node tail;
+	Node currentNode;
+	
+	
+	public void add(int d){
+		
+		if (head==null) {
+			head = new Node(d);
+			currentNode = head;
+		}
+		else{
+			Node newNode = new Node(d,currentNode);
+			currentNode = newNode;
+				
+		}
+	}
+	
+	public void display(){
+		if (head == null){ 
+			System.out.println("it's a empty list");
+		}else{
+			currentNode = head;
+			while(currentNode!=null){
+				if (currentNode.nextNode!=null){
+				System.out.printf("Now the data is %d, and the next data is %d\n",currentNode.getData(),currentNode.nextNode.getData());
+				currentNode = currentNode.nextNode;
+				}else{
+				System.out.printf("Now the data is %d, and the next data is null",currentNode.getData());
+				break;
+				}
+			}
+		}
+	}
+	
+}
+
+package mylinkedlist;
+
+public class usermode {
+	public static void main(String[] args){
+		mylist newlist = new mylist();
+		newlist.add(10);
+		newlist.add(30);
+		newlist.add(40);
+		newlist.add(50);
+		newlist.add(60);
+		newlist.display();
+		
+	}
+}
