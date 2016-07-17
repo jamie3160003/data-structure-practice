@@ -1,0 +1,61 @@
+package TheQueue;
+import java.util.Arrays;
+
+public class queue {
+
+	private String[] TheQueue;
+	private int front,rear,QueueSize;
+	
+	public queue(int size){
+		QueueSize = size;
+		front = 0;
+		rear = 0;
+		TheQueue = new String[QueueSize];
+		Arrays.fill(TheQueue, "-1");
+	}
+	
+	public void insert(String input){
+		if(rear+1<=QueueSize){
+			TheQueue[rear] = input;
+			rear++;
+		}else{
+			System.out.println("Sorry, the Queue is full\n");
+		}
+	}
+	
+	public void remove(){
+		if (rear==0||front == rear){
+			System.out.println("Sorry,the Queue is empty, so there is nothing you can removed");
+		}else{
+			TheQueue[front] = "-1";
+			front++;
+		}
+	}
+	
+	public void display(){
+		System.out.println("below is how the queue looks like : \n");
+		for (int i = 0; i<QueueSize; i++){
+			if (TheQueue[i]!="-1"){
+			System.out.println(TheQueue[i]);
+			}
+			else{
+				System.out.println("empty");
+			}
+		}
+	}
+	
+		public static void main(String[] args){
+			queue myqueue = new queue(5);
+			myqueue.insert("haha");
+			myqueue.insert("heyhey");
+			myqueue.insert("herher");
+			myqueue.display();
+			
+			myqueue.remove();
+			myqueue.remove();
+			myqueue.remove();
+			myqueue.remove();
+			myqueue.display();
+		}
+}
+
