@@ -38,8 +38,22 @@ public class BinaryTree {
 			System.out.println(currentNode.value);
 			InorderDisplay(currentNode.rightNode);
 		}
-		
-		
+	}
+	
+	public void PreorderDisplay(Node currentNode){
+		if(currentNode != null){
+			System.out.println(currentNode.value);
+			PreorderDisplay(currentNode.leftNode);
+			PreorderDisplay(currentNode.rightNode);
+		}
+	}
+	
+	public void PostOrderDisplay(Node currentNode){
+		if(currentNode!=null){
+			PostOrderDisplay(currentNode.leftNode);
+			PostOrderDisplay(currentNode.rightNode);
+			System.out.println(currentNode.value);
+		}
 	}
 	
 	public static void main(String[] args){
@@ -52,7 +66,8 @@ public class BinaryTree {
 		newTree.addNode(8);
 		newTree.addNode(30);
 		newTree.addNode(100);
-		newTree.InorderDisplay(newTree.root);
+		
+		newTree.PostOrderDisplay(newTree.root);
 		
 	}
 }
