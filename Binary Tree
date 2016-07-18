@@ -1,0 +1,74 @@
+package BinaryTree;
+
+public class BinaryTree {
+	private Node root;
+	private Node currentNode;
+	private Node previousNode;
+	private Node anotherNode;
+	private int value;
+	int condition=-1;
+	int currentValue = -1;
+	public void addNode(int input){
+		value = input;
+		
+		if (root == null){
+			Node newNode = new Node(value,null);
+			root = newNode;
+		}else{
+			currentNode = root;
+			while(currentNode!=null){
+				if(currentNode.value> value){
+					previousNode = currentNode;
+					currentNode = currentNode.leftNode;
+					
+				}else{
+					previousNode = currentNode;
+					currentNode = currentNode.rightNode;
+				}
+			}
+			anotherNode = new Node(value,previousNode);
+			if(previousNode.value>value) previousNode.leftNode = anotherNode;
+			else previousNode.rightNode = anotherNode;
+		}
+	}
+	
+	public void InorderDisplay(Node currentNode){
+		if(currentNode != null){
+			InorderDisplay(currentNode.leftNode);
+			System.out.println(currentNode.value);
+			InorderDisplay(currentNode.rightNode);
+		}
+		
+		
+	}
+	
+	public static void main(String[] args){
+		BinaryTree newTree = new BinaryTree();
+		newTree.addNode(10);
+		newTree.addNode(13);
+		newTree.addNode(7);
+		newTree.addNode(20);
+		newTree.addNode(5);
+		newTree.addNode(8);
+		newTree.addNode(30);
+		newTree.addNode(100);
+		newTree.InorderDisplay(newTree.root);
+		
+	}
+}
+
+class Node{
+	Node leftNode;
+	Node rightNode;
+	Node parentNode;
+	int value; 
+	
+	public Node(int input , Node parent){
+		value = input;
+		leftNode = null;
+		rightNode = null;
+		parentNode = parent;
+	}
+	
+	
+}
