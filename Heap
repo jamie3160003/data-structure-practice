@@ -1,0 +1,109 @@
+
+public class Heap {
+	private Data[] theHeap;
+	private int maxSize;
+	private int itemInArray;
+	
+	//constructor
+	public Heap(int size){
+		maxSize = size;
+		theHeap = new Data[maxSize];
+	}
+	
+	public void insert(int index, int data){
+		Data newData = new Data(data);
+		theHeap[index] = newData;
+		itemInArray++;
+	}
+	
+	public void insert2(int data){
+		int index = itemInArray;
+		Data newKey = new Data(data);
+		theHeap[index] =  newKey;
+		itemInArray++;
+		heapUp(index);
+	}
+	
+	public void heapUp(int index){
+		int parentIndex = (index-1)/2;
+		while(theHeap[parentIndex].data < theHeap[index].data){
+			swap(index,parentIndex);
+			index = parentIndex;
+			parentIndex = (index-1)/2;
+		}
+	}
+	
+	public void swap(int indexA, int indexB){
+		Data temp = theHeap[indexA];
+		theHeap[indexA] = theHeap[indexB];
+		theHeap[indexB] = temp;
+	}
+	
+	public int pop(){
+		int root = theHeap[0].data;
+		int lastItemIndex = itemInArray-1;
+		swap(0, lastItemIndex);
+		theHeap[lastItemIndex]=null;
+		itemInArray--;
+		heap();
+		return root;
+		
+	}
+	
+	public void heap(){
+		int index = 0;
+		int leftChildIndex;
+		int rightChildIndex;
+		int largestChildIndex;
+		
+		while(index < itemInArray/2){
+			leftChildIndex = index * 2 + 1;
+			rightChildIndex = leftChildIndex + 1;
+			
+			if(theHeap[leftChildIndex].data > theHeap[rightChildIndex].data){
+				largestChildIndex = leftChildIndex;
+			}else{
+				largestChildIndex = rightChildIndex;
+			}
+			// do the swap
+			Data temp = theHeap[index];
+			theHeap[index] = theHeap[largestChildIndex];
+			theHeap[largestChildIndex] = temp;
+			index = largestChildIndex;
+			
+		}
+		
+	}
+	
+	public void display(){
+		for(int i = 0; i<maxSize ; i++){
+			System.out.println(theHeap[i]);
+		}
+	}
+	
+	public static void main(String[] args){
+		Heap newHeap = new Heap(10);
+		newHeap.insert(0,7);
+		newHeap.insert(1,6);
+		newHeap.insert(2,5);
+		newHeap.insert(3,4);
+		newHeap.insert(4,3);
+		newHeap.insert(5,2);
+		newHeap.insert(6,1);
+		newHeap.insert2(8);
+		newHeap.pop();
+		newHeap.display();
+	}
+	
+}
+
+class Data {
+	public int data;
+	public Data(int data){
+		this.data = data;
+	}
+	
+	public String toString(){
+		return String.format("%d", data);
+	}
+}
