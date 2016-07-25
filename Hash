@@ -1,0 +1,102 @@
+import java.util.Arrays;
+
+public class Hash {
+	private int tableSize;
+	private int newTableSize;
+	private String[] hashTable;
+	private int totalElement = 0;
+	
+	
+	Hash(int size){
+		tableSize = size;
+		newTableSize = getNextPrime(tableSize);
+		hashTable = new String[newTableSize];
+		Arrays.fill(hashTable,"-1");
+	}
+	
+	public void increaseArraySize(int targetSize){
+		tableSize = getNextPrime(targetSize);
+		//temporary store the original value from previous array
+		String[] tempTable = new String[totalElement];
+		copyElement(hashTable,tempTable);
+		hashTable = new String[tableSize];
+		Arrays.fill(hashTable, "-1");
+		totalElement = 0; // initialize the number of element again since "addMultipleElement" will continuously increase the number
+		addMultipleElement(tempTable);
+	}
+	
+	public void copyElement(String[] oldTable, String[] newTable){
+		int j = 0; //j is used for increase the newTable index below
+		for(int i = 0; i < oldTable.length; i++){
+			if(oldTable[i]!="-1"){
+				newTable[j] = oldTable[i];
+				j++;
+			}
+		}
+	}
+	
+	public int getNextPrime(int minValue){
+		int testValue = minValue;
+		while (!isPrime(testValue)){
+				testValue++;  
+		}
+		
+		return testValue;
+	}
+	
+	public boolean isPrime(int value){
+		if (value%2 == 0){
+			return false;
+		}
+		for(int i = 3;  i * i < value; i+=2){
+			if(value % i == 0) return false;
+		}
+		return true;
+	}
+	
+	public void addMultipleElement(String[] inputString){
+		for (int i = 0 ; i < inputString.length; i++){
+			addElement(inputString[i]);
+		}
+	}
+	
+	public void addElement(String inputString){
+		totalElement++;
+		int number = Integer.parseInt(inputString);
+		int keyIndex = HashFunc(number,tableSize);
+		hashTable[keyIndex] = inputString;
+	}
+	
+	private int HashFunc(int inputNumber, int factor){
+		
+		int keyIndex = inputNumber % factor;
+		//enter the while loop when there is a collision.
+		while(hashTable[keyIndex]!="-1"){
+			keyIndex++;
+			if(keyIndex == factor-1){
+				keyIndex = 0;
+			}
+		}
+		return keyIndex;
+		
+	}
+	
+	public void display(){
+		for (int i = 0; i < hashTable.length; i++){
+			System.out.println(hashTable[i]);
+						
+		}
+	}
+	
+	public static void main(String[] args){
+		Hash myHash = new Hash(5);
+		String[] input = {"1","5","20","3"};
+		myHash.addMultipleElement(input);
+		myHash.display();
+		System.out.println("");
+		myHash.increaseArraySize(20);
+		myHash.display();
+		
+		
+	}
+}
